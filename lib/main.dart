@@ -9,7 +9,8 @@ const Map<String, IconData> iconsMap = {
   'card':Icons.payment,
   'euro':Icons.euro,
   'pounds': Icons.currency_pound,
-  'bitcoin': Icons.currency_bitcoin
+  'bitcoin': Icons.currency_bitcoin,
+  'divide': Icons.account_balance_wallet
 };
 
 void main() {
@@ -87,8 +88,8 @@ class LoginScreen extends StatelessWidget {
             child: TextFormField(
               decoration: const InputDecoration(
               icon: Icon(Icons.person),
-              hintText: 'xxxx-x',
-              labelText: 'Conta',
+              hintText: '000.000.000-00',
+              labelText: 'CPF',
               border: OutlineInputBorder())
 
             ),
@@ -119,11 +120,115 @@ class LoginScreen extends StatelessWidget {
               )
             )
           ),
+          Container(
+              width:300,
+              child: ElevatedButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInPage()),
+                    );},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      Text('Não possuo cadastro', style: TextStyle(fontSize: 16),)
+                    ],
+                  )
+              )
+          ),
   Container() ], ) ,
   ),
   ],
   );
     }
+}
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(100, 150, 237, 255),
+      appBar: AppBar(toolbarHeight: 200, leading: Container(),
+        title: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network('images/cancer.png', fit: BoxFit.cover, width:240),
+              Text('OxeBanking', style: TextStyle(fontSize: 100)),
+            ],
+          ),
+        ),
+
+        backgroundColor: Color.fromARGB(255, 1, 89, 100),),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height:200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width:300,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.person),
+                          hintText: '000.000.000-00',
+                          labelText: 'CPF',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                    width:300,
+                    child: const TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.password),
+                          border: OutlineInputBorder(),
+                          labelText: 'Escolha uma senha'
+                      ),
+                    )
+                ),
+                Container(
+                    width:300,
+                    child: const TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.password),
+                          border: OutlineInputBorder(),
+                          labelText: 'Confirme sua senha'
+                      ),
+                    )
+                ),
+                Container(
+                    width:300,
+                    child: ElevatedButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                          },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Cadastrar', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
+                    )
+                ),
+                Container() ], ) ,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class HomePage extends StatefulWidget {
@@ -324,10 +429,10 @@ class LayoutSection extends StatelessWidget {
       return Container();
     }
     else if (index==6){
-      return Container();
+      return const Borrowing();
     }
     else if (index==7){
-      return Container();
+      return const Recharging(10.35);
     }
     else if (index==8){
       return Container();
@@ -778,6 +883,182 @@ class Exchanging extends StatelessWidget {
     );
   }
 }
+
+class Recharging extends StatelessWidget {
+  final double amount;
+  const Recharging(this.amount, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          H1('Recargas', 100),
+          SmallCard(amount, 'attach_money', 'Saldo disponível'),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width:200,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.monetization_on_outlined),
+                          hintText: 'R\$ 00.00',
+                          labelText: 'Valor',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                  width:250,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.phone),
+                          hintText: '(xx) xxxxx-xxxx',
+                          labelText: 'Número de Celular',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                    width:300,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Efetuar recarga', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
+                    )
+                ),
+              ],
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+}
+
+class Borrowing extends StatelessWidget {
+  const Borrowing({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          H1('Empréstimos', 100),
+          MainDisplay(30000, 'Faça um empréstimo com limite de até'),
+          Container(height:110, width:500,
+            decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              width: 0
+              ),
+            borderRadius: BorderRadius.circular(20),
+            ),
+            child:Row(
+              children:[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(iconsMap['divide'],
+                color: const Color.fromARGB(255, 2, 53, 53),
+                size:50
+              ),
+          ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children:  const [
+                  Text('Parcelas', style: TextStyle(
+                    color: Colors.blueGrey, fontSize: 25
+                  ),),
+                  Text('Até 24x sem juros', style:  TextStyle(
+                  fontSize: 40,
+                  color: Color.fromARGB(255, 2, 53, 53),
+                  ),)
+
+                          ],
+                        ),
+                    ),
+
+                  ]
+                )
+      ,       ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width:260,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.monetization_on_outlined),
+                          hintText: 'R\$ 00.00',
+                          labelText: 'Valor do Empréstimo',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                  width:260,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.money),
+                          hintText: '[2 - 24]',
+                          labelText: 'Número de Parcelas',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                    width:250,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Efetuar empréstimo', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
+                    )
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
 
 //aux layouts
