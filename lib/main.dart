@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 const List<String> list1 = <String>['Pix', 'Boleto'];
 const List<String> list2 = <String>['TED', 'Pix'];
+const List<String> list3 = <String>['Dólar', 'Euro', 'Libras'];
+const List<String> list4 = <String>['6x','8x', '10x', '12x', '24x'];
+const List<String> list5 = <String>['Cartão Principal','Cartão V1', 'Cartão V2'];
+const List<String> list6 = <String>['Residência','Veículo', 'Viagem'];
+const List<String> list7 = <String>['Depositar','Resgatar'];
 const Map<String, IconData> iconsMap = {
   'attach_money': Icons.attach_money,
   'bar_chart_sharp': Icons.bar_chart_sharp,
@@ -10,7 +15,12 @@ const Map<String, IconData> iconsMap = {
   'euro':Icons.euro,
   'pounds': Icons.currency_pound,
   'bitcoin': Icons.currency_bitcoin,
-  'divide': Icons.account_balance_wallet
+  'divide': Icons.account_balance_wallet,
+  'expire': Icons.access_time,
+  'limit': Icons.vertical_align_top,
+  'title': Icons.person,
+  'number': Icons.numbers,
+  'credit': Icons.credit_card
 };
 
 void main() {
@@ -426,7 +436,7 @@ class LayoutSection extends StatelessWidget {
       return const Savings(10.35, 100.67, 3.17);
     }
     else if (index==5){
-      return Container();
+      return const CreditCards();
     }
     else if (index==6){
       return const Borrowing();
@@ -435,7 +445,7 @@ class LayoutSection extends StatelessWidget {
       return const Recharging(10.35);
     }
     else if (index==8){
-      return Container();
+      return const PolicyAssurance();
     }
 
     else{
@@ -462,14 +472,10 @@ class Account extends StatelessWidget {
         children: [
           H1('Bem vindo de volta, $name!', 70),
           MainDisplay(amount, 'Saldo disponível'),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SmallCard(savings, 'savings', 'Dinheiro guardado'),
-              SmallCard(profit, 'bar_chart_sharp', 'Rendimento mensal'),
+          SmallCard('R\$ $savings', 'savings', 'Dinheiro guardado', 1),
+          SmallCard('R\$ $profit', 'bar_chart_sharp', 'Rendimento mensal', 1),
 
-            ],
-          )
+
         ],
       ),
     );
@@ -491,7 +497,7 @@ class Payment extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   H1('Pagamentos', 100),
-                  SmallCard(amount, 'attach_money', 'Saldo da conta'),
+                  SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
@@ -557,14 +563,14 @@ class Transfer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               H1('Transferências', 100),
-              SmallCard(amount, 'attach_money', 'Saldo da conta'),
+              SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   Text('Selecione o tipo de transferência:', style: TextStyle(
                       color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
                   ),),
-                  DropdownButtonExample2(list2),
+                  DropdownButtonExample(list2),
                 ],
               ),
               Row(
@@ -659,8 +665,8 @@ class Savings extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmallCard(amount, 'attach_money', 'Disponível para depósito'),
-              SmallCard(profitSavings, 'bar_chart_sharp', 'Rendimento mensal da conta'),
+              SmallCard('R\$ $amount', 'attach_money', 'Disponível para depósito',1),
+              SmallCard('R\$ $profitSavings', 'bar_chart_sharp', 'Rendimento mensal da conta',1),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -678,6 +684,7 @@ class Savings extends StatelessWidget {
 
                       ),
                     ),
+                    DropdownButtonExample(list7),
                     Container(
                         width:300,
                         height:50,
@@ -690,7 +697,7 @@ class Savings extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: const [
-                                Text('Depositar valor', style: TextStyle(fontSize: 16),)
+                                Text('Finalizar transação', style: TextStyle(fontSize: 16),)
                               ],
                             )
                         )
@@ -698,44 +705,7 @@ class Savings extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width:300,
-                      height: 50,
-                      child: TextFormField(
-                          decoration: const InputDecoration(
-                              icon: Icon(Icons.outbox),
-                              hintText: '00.00',
-                              labelText: 'Valor',
-                              border: OutlineInputBorder())
 
-                      ),
-                    ),
-                    Container(
-                        width:300,
-                        height:50,
-                        child: ElevatedButton(
-                            onPressed: (){
-                              },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 0, 143, 160),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: const [
-                                Text('Retirar valor', style: TextStyle(fontSize: 16),)
-                              ],
-                            )
-                        )
-                    ),
-                  ],
-                ),
-              ),
 
 
             ],
@@ -761,22 +731,22 @@ class Exchanging extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              SmallerCard(5.22, 'attach_money', 'Cotação Dólar USD', 'R\$'),
-              SmallerCard(10.00, 'attach_money', 'Sua carteira Dólar', '\$')
+              SmallCard('R\$ 5.22', 'attach_money', 'Cotação Dólar USD', 0.75),
+              SmallCard('\$10.00', 'attach_money', 'Sua carteira Dólar', 0.75)
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmallerCard(5.51, 'euro', 'Cotação Euro', 'R\$'),
-              SmallerCard(0.00, 'euro', 'Sua carteira Euro', '\u{20AC}'),
+              SmallCard('R\$ 5.51', 'euro', 'Cotação Euro', 0.75),
+              SmallCard('\u{20AC} 0.00', 'euro', 'Sua carteira Euro', 0.75),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SmallerCard(6.44, 'pounds', 'Cotação Libras', 'R\$'),
-              SmallerCard(0.00, 'pounds', 'Sua carteira Libras', '\u{00A3}'),
+              SmallCard('R\$ 6.44', 'pounds', 'Cotação Libras', 0.75),
+              SmallCard('\u{00A3} 0.00', 'pounds', 'Sua carteira Libras', 0.75),
             ],
           ),
           Padding(
@@ -796,20 +766,10 @@ class Exchanging extends StatelessWidget {
 
                   ),
                 ),
+                DropdownButtonExample(list7),
+                DropdownButtonExample(list3),
                 Container(
-                  width:250,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.money),
-                          hintText: '(usd, euro ou libras)',
-                          labelText: 'Moeda de conversão',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
-                Container(
-                    width:300,
+                    width:200,
                     height:50,
                     child: ElevatedButton(
                         onPressed: (){},
@@ -820,56 +780,7 @@ class Exchanging extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: const [
-                            Text('Depositar valor', style: TextStyle(fontSize: 16),)
-                          ],
-                        )
-                    )
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width:200,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.output_outlined),
-                          hintText: 'R\$ 00.00',
-                          labelText: 'Valor',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
-                Container(
-                  width:250,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.money),
-                          hintText: '(usd, euro ou libras)',
-                          labelText: 'Moeda de conversão',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
-                Container(
-                    width:300,
-                    height:50,
-                    child: ElevatedButton(
-                        onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text('Resgatar da carteira', style: TextStyle(fontSize: 16),)
+                            Text('Concluir', style: TextStyle(fontSize: 16),)
                           ],
                         )
                     )
@@ -897,7 +808,7 @@ class Recharging extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           H1('Recargas', 100),
-          SmallCard(amount, 'attach_money', 'Saldo disponível'),
+          SmallCard('R\$ $amount', 'attach_money', 'Saldo disponível', 1),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
@@ -965,45 +876,9 @@ class Borrowing extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          H1('Empréstimos', 100),
-          MainDisplay(30000, 'Faça um empréstimo com limite de até'),
-          Container(height:110, width:500,
-            decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              width: 0
-              ),
-            borderRadius: BorderRadius.circular(20),
-            ),
-            child:Row(
-              children:[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(iconsMap['divide'],
-                color: const Color.fromARGB(255, 2, 53, 53),
-                size:50
-              ),
-          ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  const [
-                  Text('Parcelas', style: TextStyle(
-                    color: Colors.blueGrey, fontSize: 25
-                  ),),
-                  Text('Até 24x sem juros', style:  TextStyle(
-                  fontSize: 40,
-                  color: Color.fromARGB(255, 2, 53, 53),
-                  ),)
-
-                          ],
-                        ),
-                    ),
-
-                  ]
-                )
-      ,       ),
+          const H1('Empréstimos', 100),
+          const MainDisplay(30000, 'Faça um empréstimo com limite de até'),
+          const SmallCard('Em até 24x sem juros', 'divide', 'Parcelas', 1),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
@@ -1021,18 +896,7 @@ class Borrowing extends StatelessWidget {
 
                   ),
                 ),
-                Container(
-                  width:260,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.money),
-                          hintText: '[2 - 24]',
-                          labelText: 'Número de Parcelas',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
+                DropdownButtonExample(list4),
                 Container(
                     width:250,
                     height:50,
@@ -1059,94 +923,193 @@ class Borrowing extends StatelessWidget {
   }
 }
 
+class PolicyAssurance extends StatelessWidget {
+  const PolicyAssurance({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          H1('Seguros', 100),
+          DropdownButtonExample(list6)
+        ],
+      ),
+    );
+  }
+}
+
+class CreditCards extends StatelessWidget {
+  const CreditCards({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:  [
+          const H1('Cartões', 100),
+          const DropdownButtonExample(list5),
+          Container(
+            height:(400), width:(800),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                  width: 0
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    SmallCard('1234-5678-9111', 'number', 'Número do Cartão', 0.75),
+                    SmallCard('Rick M Santos', 'title', 'Titular', 0.75),
+
+                ],),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    SmallCard('2/2029', 'expire', 'Data de vencimento', 0.75),
+                    SmallCard('R\$ 2000.00', 'limit', 'Limite', 0.75),
+                ],),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    SmallCard('R\$ 1378.00', 'credit', 'Fatura', 1.5)
+                  ],
+                )
+              ],
+
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width:200,
+                height:50,
+                child: ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: const [
+                        Text('Bloquear cartão', style: TextStyle(fontSize: 16),)
+                      ],
+                    )
+                ),
+              ),
+              Container(
+                width:200,
+                height:50,
+                child: ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: const [
+                        Text('Aumentar limite', style: TextStyle(fontSize: 16),)
+                      ],
+                    )
+                ),
+              ),
+              Container(
+                width:200,
+                height:50,
+                child: ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: const [
+                        Text('Segunda via', style: TextStyle(fontSize: 16),)
+                      ],
+                    )
+                ),
+              ),
+              Container(
+                width:200,
+                height:50,
+                child: ElevatedButton(
+                    onPressed: (){},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: const [
+                        Text('Pagar fatura', style: TextStyle(fontSize: 16),)
+                      ],
+                    )
+                ),
+              )
+            ],
+          )
+
+        ],
+      ),
+    );
+  }
+}
 
 
 //aux layouts
 
 class SmallCard extends StatelessWidget {
-  final double value;
+  final String value;
   final String icon;
   final String description;
-  const SmallCard(this.value, this.icon, this.description, {Key? key}) : super(key: key);
+  final double multiply;
+  const SmallCard(this.value, this.icon, this.description, this.multiply, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(height:110, width:500,
+    return Container(height:(110* multiply), width:(500 * multiply),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
             width: 0
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20 * multiply),
       ),
       child:Row(
           children:[
              Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0 * multiply),
               child: Icon(iconsMap[icon],
                   color: const Color.fromARGB(255, 2, 53, 53),
-                  size:50
+                  size:50*multiply
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+              padding: EdgeInsets.fromLTRB(20.0 * multiply, 10.0 * multiply, 10.0 * multiply, 10.0 * multiply),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
-                  Text(description, style: const TextStyle(
-                      color: Colors.blueGrey, fontSize: 25
+                  Text(description, style: TextStyle(
+                      color: Colors.blueGrey, fontSize: (25.0*multiply)
                   ),),
-                  Text('R\$ $value', style:  const TextStyle(
-                    fontSize: 40,
-                    color: Color.fromARGB(255, 2, 53, 53),
-                  ),)
-
-                ],
-              ),
-            ),
-
-          ]
-      )
-      ,);
-  }
-}
-
-class SmallerCard extends StatelessWidget {
-  final double value;
-  final String icon;
-  final String description;
-  final String symbol;
-  const SmallerCard(this.value, this.icon, this.description, this.symbol, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(height:75, width:375,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-            width: 0
-        ),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child:Row(
-          children:[
-            Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Icon(iconsMap[icon],
-                  color: const Color.fromARGB(255, 2, 53, 53),
-                  size:50
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15.0, 7.5, 7.5, 7.5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  Text(description, style: const TextStyle(
-                      color: Colors.blueGrey, fontSize: 18
-                  ),),
-                  Text('$symbol $value', style:  const TextStyle(
-                    fontSize: 30,
+                  Text(value, style:  TextStyle(
+                    fontSize: 40*multiply,
                     color: Color.fromARGB(255, 2, 53, 53),
                   ),)
 
@@ -1268,15 +1231,15 @@ class ExtractElement extends StatelessWidget {
 // DropdownButton
 
 class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample(list, {super.key});
-
+  final List<String> list;
+  const DropdownButtonExample(this.list, {super.key});
 
   @override
   State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
 }
 
 class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  String dropdownValue = list1.first;
+  late String dropdownValue = widget.list.first;
 
   @override
   Widget build(BuildContext context) {
@@ -1295,45 +1258,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
           dropdownValue = value!;
         });
       },
-      items: list1.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-}
-
-class DropdownButtonExample2 extends StatefulWidget {
-  const DropdownButtonExample2(list, {super.key});
-
-
-  @override
-  State<DropdownButtonExample2> createState() => _DropdownButtonExampleState2();
-}
-
-class _DropdownButtonExampleState2 extends State<DropdownButtonExample2> {
-  String dropdownValue = list2.first;
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Color.fromARGB(200, 2, 53, 53), fontSize: 20),
-      underline: Container(
-        height: 2,
-        color: Color.fromARGB(200, 2, 53, 53),
-      ),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: list2.map<DropdownMenuItem<String>>((String value) {
+      items: widget.list.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
