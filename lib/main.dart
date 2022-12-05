@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-      home: InitialScreen()
+      home: const InitialScreen()
     );
 
   }
@@ -60,20 +60,18 @@ class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(100, 150, 237, 255),
+      backgroundColor: const Color.fromARGB(100, 150, 237, 255),
       appBar: AppBar(toolbarHeight: 200, leading: Container(),
-        title: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.network('images/cancer.png', fit: BoxFit.cover, width:240),
-              Text('OxeBanking', style: TextStyle(fontSize: 100)),
-            ],
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network('images/cancer.png', fit: BoxFit.cover, width:240),
+            const Text('OxeBanking', style: TextStyle(fontSize: 100)),
+          ],
         ),
 
-        backgroundColor: Color.fromARGB(255, 1, 89, 100),),
-      body: LoginScreen(),
+        backgroundColor: const Color.fromARGB(255, 1, 89, 100),),
+      body: const LoginScreen(),
     );
   }
 }
@@ -86,14 +84,14 @@ class LoginScreen extends StatelessWidget {
     return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Container(
+      SizedBox(
         height:200,
 
         child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width:300,
             child: TextFormField(
               decoration: const InputDecoration(
@@ -104,9 +102,9 @@ class LoginScreen extends StatelessWidget {
 
             ),
       ),
-          Container(
+          const SizedBox(
             width:300,
-            child: const TextField(
+            child: TextField(
               obscureText: true,
               decoration: InputDecoration(
               icon: Icon(Icons.password),
@@ -115,7 +113,7 @@ class LoginScreen extends StatelessWidget {
               ),
         )
       ),
-          Container(
+          SizedBox(
             width:300,
             child: ElevatedButton(
               onPressed: (){
@@ -130,7 +128,7 @@ class LoginScreen extends StatelessWidget {
               )
             )
           ),
-          Container(
+          SizedBox(
               width:300,
               child: ElevatedButton(
                   onPressed: (){
@@ -163,29 +161,27 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(100, 150, 237, 255),
+      backgroundColor: const Color.fromARGB(100, 150, 237, 255),
       appBar: AppBar(toolbarHeight: 200, leading: Container(),
-        title: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.network('images/cancer.png', fit: BoxFit.cover, width:240),
-              Text('OxeBanking', style: TextStyle(fontSize: 100)),
-            ],
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network('images/cancer.png', fit: BoxFit.cover, width:240),
+            const Text('OxeBanking', style: TextStyle(fontSize: 100)),
+          ],
         ),
 
-        backgroundColor: Color.fromARGB(255, 1, 89, 100),),
+        backgroundColor: const Color.fromARGB(255, 1, 89, 100),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             height:200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width:300,
                   child: TextFormField(
                       decoration: const InputDecoration(
@@ -196,9 +192,9 @@ class _SignInPageState extends State<SignInPage> {
 
                   ),
                 ),
-                Container(
+                const SizedBox(
                     width:300,
-                    child: const TextField(
+                    child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                           icon: Icon(Icons.password),
@@ -207,9 +203,9 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     )
                 ),
-                Container(
+                const SizedBox(
                     width:300,
-                    child: const TextField(
+                    child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                           icon: Icon(Icons.password),
@@ -218,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     )
                 ),
-                Container(
+                SizedBox(
                     width:300,
                     child: ElevatedButton(
                         onPressed: (){
@@ -255,17 +251,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 100, leading: Container(),
-        title: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.network('images/cancer.png', fit: BoxFit.cover, width:150),
-              Text('OxeBanking', style: TextStyle(fontSize: 80)),
-            ],
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network('images/cancer.png', fit: BoxFit.cover, width:150),
+            const Text('OxeBanking', style: TextStyle(fontSize: 80)),
+          ],
         ),
 
-        backgroundColor: Color.fromARGB(255, 1, 89, 100),),
+        backgroundColor: const Color.fromARGB(255, 1, 89, 100),),
       body: Column(
         children: [
           _Menu((section) {
@@ -406,7 +400,7 @@ class _Section extends StatelessWidget {
             color:Colors.white,
             ),
             width: 900,
-            child: LayoutSection(this.index)
+            child: LayoutSection(index)
 
           ),
         )]
@@ -490,60 +484,59 @@ class Payment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  H1('Pagamentos', 100),
-                  SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text('Selecione o pagamento que deseja fazer:', style: TextStyle(
-                          color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
-                      ),),
-                      DropdownButtonExample(list1),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width:300,
-                        height: 50,
-                        child: TextFormField(
-                            decoration: const InputDecoration(
-                                icon: Icon(Icons.inbox),
-                                hintText: 'Código pix/boleto',
-                                labelText: 'Código do pagamento',
-                                border: OutlineInputBorder())
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const H1('Pagamentos', 100),
+          SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Selecione o pagamento que deseja fazer:', style: TextStyle(
+                  color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
+              ),),
+              DropdownButtonExample(list1),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width:300,
+                height: 50,
+                child: TextFormField(
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.inbox),
+                        hintText: 'Código pix/boleto',
+                        labelText: 'Código do pagamento',
+                        border: OutlineInputBorder())
 
-                        ),
+                ),
+              ),
+              SizedBox(
+                  width:300,
+                  height:50,
+                  child: ElevatedButton(
+                      onPressed: (){},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                       ),
-                      Container(
-                          width:300,
-                          height:50,
-                          child: ElevatedButton(
-                              onPressed: (){},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromARGB(255, 0, 143, 160),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: const [
-                                  Text('Efetuar pagamento', style: TextStyle(fontSize: 16),)
-                                ],
-                              )
-                          )
-                      ),
-                    ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: const [
+                          Text('Efetuar pagamento', style: TextStyle(fontSize: 16),)
+                        ],
+                      )
                   )
+              ),
+            ],
+          )
 
-                ],
-              )),
+        ],
+      ),
     );
   }
 }
@@ -556,60 +549,59 @@ class Transfer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              H1('Transferências', 100),
-              SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Selecione o tipo de transferência:', style: TextStyle(
-                      color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
-                  ),),
-                  DropdownButtonExample(list2),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width:300,
-                    height: 50,
-                    child: TextFormField(
-                        decoration: const InputDecoration(
-                            icon: Icon(Icons.inbox),
-                            hintText: 'Código pix/TED',
-                            labelText: 'Código da transferência',
-                            border: OutlineInputBorder())
-
-                    ),
-                  ),
-                  Container(
-                      width:300,
-                      height:50,
-                      child: ElevatedButton(
-                          onPressed: (){},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 0, 143, 160),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: const [
-                              Text('Efetuar transferência', style: TextStyle(fontSize: 16),)
-                            ],
-                          )
-                      )
-                  ),
-                ],
-              )
-
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const H1('Transferências', 100),
+          SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Selecione o tipo de transferência:', style: TextStyle(
+                  color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
+              ),),
+              DropdownButtonExample(list2),
             ],
-          )),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width:300,
+                height: 50,
+                child: TextFormField(
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.inbox),
+                        hintText: 'Código pix/TED',
+                        labelText: 'Código da transferência',
+                        border: OutlineInputBorder())
+
+                ),
+              ),
+              SizedBox(
+                  width:300,
+                  height:50,
+                  child: ElevatedButton(
+                      onPressed: (){},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: const [
+                          Text('Efetuar transferência', style: TextStyle(fontSize: 16),)
+                        ],
+                      )
+                  )
+              ),
+            ],
+          )
+
+        ],
+      ),
     );
   }
 }
@@ -625,7 +617,7 @@ class Extracts extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          H1('Extratos', 100),
+          const H1('Extratos', 100),
           SizedBox(
             height: 560,
             child: ListView(children: const [
@@ -659,7 +651,7 @@ class Savings extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          H1('Poupança', 100),
+          const H1('Poupança', 100),
           MainDisplay(savings, 'Saldo Poupança'),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -672,7 +664,7 @@ class Savings extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width:300,
                       height: 50,
                       child: TextFormField(
@@ -684,14 +676,14 @@ class Savings extends StatelessWidget {
 
                       ),
                     ),
-                    DropdownButtonExample(list7),
-                    Container(
+                    const DropdownButtonExample(list7),
+                    SizedBox(
                         width:300,
                         height:50,
                         child: ElevatedButton(
                             onPressed: (){},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                              backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -712,7 +704,7 @@ class Savings extends StatelessWidget {
           )
         ],
       ),
-    );;
+    );
   }
 }
 
@@ -727,7 +719,7 @@ class Exchanging extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          H1('Câmbio', 100),
+          const H1('Câmbio', 100),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
@@ -737,14 +729,14 @@ class Exchanging extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               SmallCard('R\$ 5.51', 'euro', 'Cotação Euro', 0.75),
               SmallCard('\u{20AC} 0.00', 'euro', 'Sua carteira Euro', 0.75),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               SmallCard('R\$ 6.44', 'pounds', 'Cotação Libras', 0.75),
               SmallCard('\u{00A3} 0.00', 'pounds', 'Sua carteira Libras', 0.75),
             ],
@@ -754,7 +746,7 @@ class Exchanging extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width:200,
                   height: 50,
                   child: TextFormField(
@@ -766,15 +758,15 @@ class Exchanging extends StatelessWidget {
 
                   ),
                 ),
-                DropdownButtonExample(list7),
-                DropdownButtonExample(list3),
-                Container(
+                const DropdownButtonExample(list7),
+                const DropdownButtonExample(list3),
+                SizedBox(
                     width:200,
                     height:50,
                     child: ElevatedButton(
                         onPressed: (){},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -807,14 +799,14 @@ class Recharging extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          H1('Recargas', 100),
+          const H1('Recargas', 100),
           SmallCard('R\$ $amount', 'attach_money', 'Saldo disponível', 1),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width:200,
                   height: 50,
                   child: TextFormField(
@@ -826,7 +818,7 @@ class Recharging extends StatelessWidget {
 
                   ),
                 ),
-                Container(
+                SizedBox(
                   width:250,
                   height: 50,
                   child: TextFormField(
@@ -838,13 +830,13 @@ class Recharging extends StatelessWidget {
 
                   ),
                 ),
-                Container(
+                SizedBox(
                     width:300,
                     height:50,
                     child: ElevatedButton(
                         onPressed: (){},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -884,7 +876,7 @@ class Borrowing extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width:260,
                   height: 50,
                   child: TextFormField(
@@ -896,14 +888,14 @@ class Borrowing extends StatelessWidget {
 
                   ),
                 ),
-                DropdownButtonExample(list4),
-                Container(
+                const DropdownButtonExample(list4),
+                SizedBox(
                     width:250,
                     height:50,
                     child: ElevatedButton(
                         onPressed: (){},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -933,7 +925,7 @@ class PolicyAssurance extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           H1('Seguros', 100),
           DropdownButtonExample(list6)
         ],
@@ -994,13 +986,13 @@ class CreditCards extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              SizedBox(
                 width:200,
                 height:50,
                 child: ElevatedButton(
                     onPressed: (){},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1011,13 +1003,13 @@ class CreditCards extends StatelessWidget {
                     )
                 ),
               ),
-              Container(
+              SizedBox(
                 width:200,
                 height:50,
                 child: ElevatedButton(
                     onPressed: (){},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1028,13 +1020,13 @@ class CreditCards extends StatelessWidget {
                     )
                 ),
               ),
-              Container(
+              SizedBox(
                 width:200,
                 height:50,
                 child: ElevatedButton(
                     onPressed: (){},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1045,13 +1037,13 @@ class CreditCards extends StatelessWidget {
                     )
                 ),
               ),
-              Container(
+              SizedBox(
                 width:200,
                 height:50,
                 child: ElevatedButton(
                     onPressed: (){},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1110,7 +1102,7 @@ class SmallCard extends StatelessWidget {
                   ),),
                   Text(value, style:  TextStyle(
                     fontSize: 40*multiply,
-                    color: Color.fromARGB(255, 2, 53, 53),
+                    color: const Color.fromARGB(255, 2, 53, 53),
                   ),)
 
                 ],
@@ -1191,7 +1183,7 @@ class ExtractElement extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 3.0),
       child: Container(
-        color: Color.fromARGB(30, 2, 53, 53),
+        color: const Color.fromARGB(30, 2, 53, 53),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1228,6 +1220,7 @@ class ExtractElement extends StatelessWidget {
   }
 }
 
+
 // DropdownButton
 
 class DropdownButtonExample extends StatefulWidget {
@@ -1250,7 +1243,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
       style: const TextStyle(color: Color.fromARGB(200, 2, 53, 53), fontSize: 20),
       underline: Container(
         height: 2,
-        color: Color.fromARGB(200, 2, 53, 53),
+        color: const Color.fromARGB(200, 2, 53, 53),
       ),
       onChanged: (String? value) {
         // This is called when the user selects an item.
