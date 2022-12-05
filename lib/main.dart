@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-const List<String> list1 = <String>['Pix', 'Boleto'];
-const List<String> list2 = <String>['TED', 'Pix'];
-const List<String> list3 = <String>['Dólar', 'Euro', 'Libras'];
-const List<String> list4 = <String>['6x','8x', '10x', '12x', '24x'];
+const List<String> list1 = <String>['Método de Pagamento','Pix', 'Boleto'];
+const List<String> list2 = <String>['Método de Transferência','TED', 'Pix'];
+const List<String> list3 = <String>['Moeda','Dólar', 'Euro', 'Libras'];
+const List<String> list4 = <String>['Parcelas','6x','8x', '10x', '12x', '24x'];
 const List<String> list5 = <String>['Cartão Principal','Cartão V1', 'Cartão V2'];
-const List<String> list6 = <String>['Residência','Veículo', 'Viagem'];
-const List<String> list7 = <String>['Depositar','Resgatar'];
+const List<String> list6 = <String>['Tipo de Seguro','Residência','Veículo', 'Viagem'];
+const List<String> list7 = <String>['Ação','Depositar','Resgatar'];
 const Map<String, IconData> iconsMap = {
   'attach_money': Icons.attach_money,
   'bar_chart_sharp': Icons.bar_chart_sharp,
@@ -22,6 +22,27 @@ const Map<String, IconData> iconsMap = {
   'number': Icons.numbers,
   'credit': Icons.credit_card
 };
+const String clientName = 'Rick';
+double countAmount = 1364.27;
+double savingsAmount = 10208.35;
+double dollarAmount = 30.00;
+double dollarCurrency = 5.22;
+double poundsAmount = 15.00;
+double poundsCurrency = 6.44;
+double euroAmount = 22.00;
+double euroCurrency = 5.51;
+double monthlyStonks = 8.27;
+double borrowingLimits = 32000.00;
+String valueDropDownSelected = '';
+
+TextEditingController savingsController = TextEditingController();
+TextEditingController transferController = TextEditingController();
+TextEditingController paymentController = TextEditingController();
+TextEditingController rechargeController = TextEditingController();
+TextEditingController cellphoneController = TextEditingController();
+TextEditingController exchangeController = TextEditingController();
+TextEditingController borrowingController = TextEditingController();
+
 
 void main() {
   runApp(const MyApp());
@@ -270,7 +291,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: PageView(
               controller: _pageController,
-              scrollDirection: Axis.vertical,
+              scrollDirection: Axis.horizontal,
               pageSnapping: false,
               children: const [
                 _Section(color: Color.fromARGB(255, 0, 143, 160), index: 0),
@@ -415,19 +436,19 @@ class LayoutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(index==0) {
-      return const Account(10.35, 100.67, 2.17, 'Rick');
+      return Account(countAmount, savingsAmount, monthlyStonks, clientName);
     }
     else if(index==1) {
-      return const Payment(10.35);
+      return Payment(countAmount);
     }
     else if(index==2) {
-      return const Transfer(10.35);
+      return Transfer(countAmount);
     }
     else if(index==3) {
       return const Extracts();
     }
     else if (index==4){
-      return const Savings(10.35, 100.67, 3.17);
+      return Savings(countAmount, savingsAmount, monthlyStonks);
     }
     else if (index==5){
       return const CreditCards();
@@ -436,7 +457,7 @@ class LayoutSection extends StatelessWidget {
       return const Borrowing();
     }
     else if (index==7){
-      return const Recharging(10.35);
+      return Recharging(countAmount);
     }
     else if (index==8){
       return const PolicyAssurance();
@@ -448,7 +469,7 @@ class LayoutSection extends StatelessWidget {
   }
 }
 
-class Account extends StatelessWidget {
+class Account extends StatefulWidget {
   final double amount;
   final double savings;
   final double profit;
@@ -456,151 +477,193 @@ class Account extends StatelessWidget {
   const Account(this.amount,this.savings, this.profit,this.name, {Key? key}) : super(key: key);
 
   @override
+  State<Account> createState() => _AccountState();
+}
+
+class _AccountState extends State<Account> {
+  @override
   Widget build(BuildContext context) {
 
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          H1('Bem vindo de volta, $name!', 70),
-          MainDisplay(amount, 'Saldo disponível'),
-          SmallCard('R\$ $savings', 'savings', 'Dinheiro guardado', 1),
-          SmallCard('R\$ $profit', 'bar_chart_sharp', 'Rendimento mensal', 1),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              H1('Bem vindo de volta, ${widget.name}!', 70),
+              MainDisplay(widget.amount, 'Saldo disponível'),
+              SmallCard('R\$ ${widget.savings}', 'savings', 'Dinheiro guardado', 1),
+              SmallCard('R\$ ${widget.profit}', 'bar_chart_sharp', 'Rendimento mensal', 1),
 
 
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class Payment extends StatelessWidget {
+class Payment extends StatefulWidget {
   final double amount;
   const Payment(this.amount, {Key? key}) : super(key: key);
 
   @override
+  State<Payment> createState() => _PaymentState();
+}
+
+class _PaymentState extends State<Payment> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const H1('Pagamentos', 100),
-          SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Selecione o pagamento que deseja fazer:', style: TextStyle(
-                  color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
-              ),),
-              DropdownButtonExample(list1),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const H1('Pagamentos', 100),
+              SmallCard('R\$ ${widget.amount}', 'attach_money', 'Saldo da conta', 1),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Selecione o pagamento que deseja fazer:', style: TextStyle(
+                      color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
+                  ),),
+                  DropdownButtonExample(list1),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width:300,
+                    height: 50,
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.qr_code),
+                            hintText: 'Código pix/boleto',
+                            labelText: 'Código do pagamento',
+                            border: OutlineInputBorder())
+
+                    ),
+                  ),
+                  SizedBox(
+                      width:300,
+                      height:50,
+                      child: ElevatedButton(
+                          onPressed: (){},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: const [
+                              Text('Efetuar pagamento', style: TextStyle(fontSize: 16),)
+                            ],
+                          )
+                      )
+                  ),
+                ],
+              )
+
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width:300,
-                height: 50,
-                child: TextFormField(
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.inbox),
-                        hintText: 'Código pix/boleto',
-                        labelText: 'Código do pagamento',
-                        border: OutlineInputBorder())
-
-                ),
-              ),
-              SizedBox(
-                  width:300,
-                  height:50,
-                  child: ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 0, 143, 160),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
-                          Text('Efetuar pagamento', style: TextStyle(fontSize: 16),)
-                        ],
-                      )
-                  )
-              ),
-            ],
-          )
-
-        ],
+        ),
       ),
     );
   }
 }
 
-class Transfer extends StatelessWidget {
+class Transfer extends StatefulWidget {
   final double amount;
   const Transfer(this.amount, {Key? key}) : super(key: key);
 
   @override
+  State<Transfer> createState() => _TransferState();
+}
+
+class _TransferState extends State<Transfer> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const H1('Transferências', 100),
-          SmallCard('R\$ $amount', 'attach_money', 'Saldo da conta', 1),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Selecione o tipo de transferência:', style: TextStyle(
-                  color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
-              ),),
-              DropdownButtonExample(list2),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const H1('Transferências', 100),
+              SmallCard('R\$ ${widget.amount}', 'attach_money', 'Saldo da conta', 1),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Selecione o tipo de transferência:', style: TextStyle(
+                      color: Color.fromARGB(255, 2, 53, 53), fontSize: 20
+                  ),),
+                  DropdownButtonExample(list2),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width:250,
+                    height: 50,
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.monetization_on_outlined),
+                            hintText: '00.00',
+                            labelText: 'Valor da transferência',
+                            border: OutlineInputBorder())
+
+                    ),
+                  ),
+                  SizedBox(
+                    width:250,
+                    height: 50,
+                    child: TextFormField(
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.qr_code),
+                            hintText: 'Código pix/TED',
+                            labelText: 'Código da transferência',
+                            border: OutlineInputBorder())
+
+                    ),
+                  ),
+                  SizedBox(
+                      width:300,
+                      height:50,
+                      child: ElevatedButton(
+                          onPressed: (){},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: const [
+                              Text('Efetuar transferência', style: TextStyle(fontSize: 16),)
+                            ],
+                          )
+                      )
+                  ),
+                ],
+              )
+
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width:300,
-                height: 50,
-                child: TextFormField(
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.inbox),
-                        hintText: 'Código pix/TED',
-                        labelText: 'Código da transferência',
-                        border: OutlineInputBorder())
-
-                ),
-              ),
-              SizedBox(
-                  width:300,
-                  height:50,
-                  child: ElevatedButton(
-                      onPressed: (){},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 0, 143, 160),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
-                          Text('Efetuar transferência', style: TextStyle(fontSize: 16),)
-                        ],
-                      )
-                  )
-              ),
-            ],
-          )
-
-        ],
+        ),
       ),
     );
   }
@@ -613,70 +676,267 @@ class Extracts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const H1('Extratos', 100),
-          SizedBox(
-            height: 560,
-            child: ListView(children: const [
-              ExtractElement('Transferência', 'pix', 190, 'pix', '27 Nov'),
-              ExtractElement('Pagamento', 'C.Débito', 120, 'card', '27 Nov'),
-              ExtractElement('Dinheiro resgatado', 'poupança', 19, 'savings', '26 Nov'),
-              ExtractElement('Dinheiro guardado', 'poupança', 10, 'savings', '22 Nov'),
-              ExtractElement('Pagamento', 'pix', 90, 'pix', '19 Nov'),
-              ExtractElement('Pagamento', 'boleto', 20, 'attach_money', '28 Oct'),
-              ExtractElement('Transferência', 'pix', 12, 'pix', '27 Oct'),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const H1('Extratos', 100),
+              SizedBox(
+                height: 560,
+                child: ListView(children: const [
+                  ExtractElement('Transferência', 'pix', 190, 'pix', '27 Nov'),
+                  ExtractElement('Pagamento', 'C.Débito', 120, 'card', '27 Nov'),
+                  ExtractElement('Dinheiro resgatado', 'poupança', 19, 'savings', '26 Nov'),
+                  ExtractElement('Dinheiro guardado', 'poupança', 10, 'savings', '22 Nov'),
+                  ExtractElement('Pagamento', 'pix', 90, 'pix', '19 Nov'),
+                  ExtractElement('Pagamento', 'boleto', 20, 'attach_money', '28 Oct'),
+                  ExtractElement('Transferência', 'pix', 12, 'pix', '27 Oct'),
 
-            ],),
+                ],),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class Savings extends StatelessWidget {
+class Savings extends StatefulWidget {
   final double amount;
   final double savings;
   final double profitSavings;
   const Savings(this.amount, this.savings, this.profitSavings, {Key? key}) : super(key: key);
 
   @override
+  State<Savings> createState() => _SavingsState();
+}
+
+class _SavingsState extends State<Savings> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const H1('Poupança', 100),
-          MainDisplay(savings, 'Saldo Poupança'),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmallCard('R\$ $amount', 'attach_money', 'Disponível para depósito',1),
-              SmallCard('R\$ $profitSavings', 'bar_chart_sharp', 'Rendimento mensal da conta',1),
+              const H1('Poupança', 100),
+              MainDisplay(savingsAmount, 'Saldo Poupança'),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SmallCard('R\$ $countAmount', 'attach_money', 'Disponível para depósito',1),
+                  SmallCard('R\$ $monthlyStonks', 'bar_chart_sharp', 'Rendimento mensal da conta',1),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width:300,
+                          height: 50,
+                          child: TextFormField(
+                              controller: savingsController,
+                              decoration: const InputDecoration(
+                                  icon: Icon(Icons.inbox),
+                                  hintText: '00.00',
+                                  labelText: 'Valor',
+                                  border: OutlineInputBorder())
+
+                          ),
+                        ),
+                        const DropdownButtonExample(list7),
+                        SizedBox(
+                            width:300,
+                            height:50,
+                            child: ElevatedButton(
+                                onPressed: (){
+                                  setState(() {
+                                    if (valueDropDownSelected=='Depositar') {
+                                      savingsAmount+= double.parse(savingsController.text);
+                                      countAmount-= double.parse(savingsController.text);
+                                    }
+                                    else if (valueDropDownSelected =='Resgatar') {
+                                      savingsAmount-= double.parse(savingsController.text);
+                                      countAmount+= double.parse(savingsController.text);
+                                    }
+                                  });},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: const [
+                                    Text('Finalizar transação', style: TextStyle(fontSize: 16),)
+                                  ],
+                                )
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Exchanging extends StatefulWidget {
+  const Exchanging({Key? key}) : super(key: key);
+
+  @override
+  State<Exchanging> createState() => _ExchangingState();
+}
+
+class _ExchangingState extends State<Exchanging> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const H1('Câmbio', 100),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SmallCard('R\$ $dollarCurrency', 'attach_money', 'Cotação Dólar USD', 0.75),
+                  SmallCard('\$ $dollarAmount', 'attach_money', 'Sua carteira Dólar', 0.75)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SmallCard('R\$ $euroCurrency', 'euro', 'Cotação Euro', 0.75),
+                  SmallCard('\u{20AC} $euroAmount', 'euro', 'Sua carteira Euro', 0.75),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SmallCard('R\$ $poundsCurrency', 'pounds', 'Cotação Libras', 0.75),
+                  SmallCard('\u{00A3} $poundsAmount', 'pounds', 'Sua carteira Libras', 0.75),
+                ],
+              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width:300,
+                      width:200,
                       height: 50,
                       child: TextFormField(
                           decoration: const InputDecoration(
-                              icon: Icon(Icons.inbox),
-                              hintText: '00.00',
+                              icon: Icon(Icons.input_outlined),
+                              hintText: 'R\$ 00.00',
                               labelText: 'Valor',
                               border: OutlineInputBorder())
 
                       ),
                     ),
                     const DropdownButtonExample(list7),
+                    const DropdownButtonExample(list3),
+                    SizedBox(
+                        width:200,
+                        height:50,
+                        child: ElevatedButton(
+                            onPressed: (){},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: const [
+                                Text('Concluir', style: TextStyle(fontSize: 16),)
+                              ],
+                            )
+                        )
+                    ),
+                  ],
+                ),
+              ),
+
+
+            ],),
+        ),
+      ),
+    );
+  }
+}
+
+class Recharging extends StatefulWidget {
+  final double amount;
+  const Recharging(this.amount, {Key? key}) : super(key: key);
+
+  @override
+  State<Recharging> createState() => _RechargingState();
+}
+
+class _RechargingState extends State<Recharging> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const H1('Recargas', 100),
+              SmallCard('R\$ ${widget.amount}', 'attach_money', 'Saldo disponível', 1),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width:200,
+                      height: 50,
+                      child: TextFormField(
+                          decoration: const InputDecoration(
+                              icon: Icon(Icons.monetization_on_outlined),
+                              hintText: 'R\$ 00.00',
+                              labelText: 'Valor',
+                              border: OutlineInputBorder())
+
+                      ),
+                    ),
+                    SizedBox(
+                      width:250,
+                      height: 50,
+                      child: TextFormField(
+                          decoration: const InputDecoration(
+                              icon: Icon(Icons.phone),
+                              hintText: '(xx) xxxxx-xxxx',
+                              labelText: 'Número de Celular',
+                              border: OutlineInputBorder())
+
+                      ),
+                    ),
                     SizedBox(
                         width:300,
                         height:50,
@@ -689,7 +949,7 @@ class Savings extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: const [
-                                Text('Finalizar transação', style: TextStyle(fontSize: 16),)
+                                Text('Efetuar recarga', style: TextStyle(fontSize: 16),)
                               ],
                             )
                         )
@@ -698,218 +958,77 @@ class Savings extends StatelessWidget {
                 ),
               ),
 
-
-
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class Exchanging extends StatelessWidget {
-  const Exchanging({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const H1('Câmbio', 100),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              SmallCard('R\$ 5.22', 'attach_money', 'Cotação Dólar USD', 0.75),
-              SmallCard('\$10.00', 'attach_money', 'Sua carteira Dólar', 0.75)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              SmallCard('R\$ 5.51', 'euro', 'Cotação Euro', 0.75),
-              SmallCard('\u{20AC} 0.00', 'euro', 'Sua carteira Euro', 0.75),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              SmallCard('R\$ 6.44', 'pounds', 'Cotação Libras', 0.75),
-              SmallCard('\u{00A3} 0.00', 'pounds', 'Sua carteira Libras', 0.75),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width:200,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.input_outlined),
-                          hintText: 'R\$ 00.00',
-                          labelText: 'Valor',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
-                const DropdownButtonExample(list7),
-                const DropdownButtonExample(list3),
-                SizedBox(
-                    width:200,
-                    height:50,
-                    child: ElevatedButton(
-                        onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text('Concluir', style: TextStyle(fontSize: 16),)
-                          ],
-                        )
-                    )
-                ),
-              ],
-            ),
-          ),
-
-
-        ],),
-    );
-  }
-}
-
-class Recharging extends StatelessWidget {
-  final double amount;
-  const Recharging(this.amount, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const H1('Recargas', 100),
-          SmallCard('R\$ $amount', 'attach_money', 'Saldo disponível', 1),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width:200,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.monetization_on_outlined),
-                          hintText: 'R\$ 00.00',
-                          labelText: 'Valor',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
-                SizedBox(
-                  width:250,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.phone),
-                          hintText: '(xx) xxxxx-xxxx',
-                          labelText: 'Número de Celular',
-                          border: OutlineInputBorder())
-
-                  ),
-                ),
-                SizedBox(
-                    width:300,
-                    height:50,
-                    child: ElevatedButton(
-                        onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text('Efetuar recarga', style: TextStyle(fontSize: 16),)
-                          ],
-                        )
-                    )
-                ),
-              ],
-            ),
-          ),
-
-        ],
-      ),
-    );
-  }
-}
-
-class Borrowing extends StatelessWidget {
+class Borrowing extends StatefulWidget {
   const Borrowing({Key? key}) : super(key: key);
 
   @override
+  State<Borrowing> createState() => _BorrowingState();
+}
+
+class _BorrowingState extends State<Borrowing> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const H1('Empréstimos', 100),
-          const MainDisplay(30000, 'Faça um empréstimo com limite de até'),
-          const SmallCard('Em até 24x sem juros', 'divide', 'Parcelas', 1),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width:260,
-                  height: 50,
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.monetization_on_outlined),
-                          hintText: 'R\$ 00.00',
-                          labelText: 'Valor do Empréstimo',
-                          border: OutlineInputBorder())
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const H1('Empréstimos', 100),
+              MainDisplay(borrowingLimits, 'Faça um empréstimo com limite de até'),
+              const SmallCard('Em até 24x sem juros', 'divide', 'Parcelas', 1),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width:260,
+                      height: 50,
+                      child: TextFormField(
+                          decoration: const InputDecoration(
+                              icon: Icon(Icons.monetization_on_outlined),
+                              hintText: 'R\$ 00.00',
+                              labelText: 'Valor do Empréstimo',
+                              border: OutlineInputBorder())
 
-                  ),
-                ),
-                const DropdownButtonExample(list4),
-                SizedBox(
-                    width:250,
-                    height:50,
-                    child: ElevatedButton(
-                        onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Text('Efetuar empréstimo', style: TextStyle(fontSize: 16),)
-                          ],
+                      ),
+                    ),
+                    const DropdownButtonExample(list4),
+                    SizedBox(
+                        width:250,
+                        height:50,
+                        child: ElevatedButton(
+                            onPressed: (){},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: const [
+                                Text('Efetuar empréstimo', style: TextStyle(fontSize: 16),)
+                              ],
+                            )
                         )
-                    )
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -922,13 +1041,18 @@ class PolicyAssurance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          H1('Seguros', 100),
-          DropdownButtonExample(list6)
-        ],
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              H1('Seguros', 100),
+              DropdownButtonExample(list6)
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -941,123 +1065,128 @@ class CreditCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:  [
-          const H1('Cartões', 100),
-          const DropdownButtonExample(list5),
-          Container(
-            height:(400), width:(800),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                  width: 0
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:  [
+              const H1('Cartões', 100),
+              const DropdownButtonExample(list5),
+              Container(
+                height:(400), width:(800),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                      width: 0
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    SmallCard('1234-5678-9111', 'number', 'Número do Cartão', 0.75),
-                    SmallCard('Rick M Santos', 'title', 'Titular', 0.75),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        SmallCard('1234-5678-9111', 'number', 'Número do Cartão', 0.75),
+                        SmallCard('Rick M Santos', 'title', 'Titular', 0.75),
 
-                ],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    SmallCard('2/2029', 'expire', 'Data de vencimento', 0.75),
-                    SmallCard('R\$ 2000.00', 'limit', 'Limite', 0.75),
-                ],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    SmallCard('R\$ 1378.00', 'credit', 'Fatura', 1.5)
+                    ],),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        SmallCard('2/2029', 'expire', 'Data de vencimento', 0.75),
+                        SmallCard('R\$ 2000.00', 'limit', 'Limite', 0.75),
+                    ],),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        SmallCard('R\$ 1378.00', 'credit', 'Fatura', 1.5)
+                      ],
+                    )
                   ],
-                )
-              ],
 
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                width:200,
-                height:50,
-                child: ElevatedButton(
-                    onPressed: (){},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
-                        Text('Bloquear cartão', style: TextStyle(fontSize: 16),)
-                      ],
-                    )
                 ),
               ),
-              SizedBox(
-                width:200,
-                height:50,
-                child: ElevatedButton(
-                    onPressed: (){},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width:200,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Bloquear cartão', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
-                        Text('Aumentar limite', style: TextStyle(fontSize: 16),)
-                      ],
-                    )
-                ),
-              ),
-              SizedBox(
-                width:200,
-                height:50,
-                child: ElevatedButton(
-                    onPressed: (){},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                  ),
+                  SizedBox(
+                    width:200,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Aumentar limite', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
-                        Text('Segunda via', style: TextStyle(fontSize: 16),)
-                      ],
-                    )
-                ),
-              ),
-              SizedBox(
-                width:200,
-                height:50,
-                child: ElevatedButton(
-                    onPressed: (){},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                  ),
+                  SizedBox(
+                    width:200,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Segunda via', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
-                        Text('Pagar fatura', style: TextStyle(fontSize: 16),)
-                      ],
-                    )
-                ),
+                  ),
+                  SizedBox(
+                    width:200,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Pagar fatura', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
+                    ),
+                  )
+                ],
               )
-            ],
-          )
 
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -1249,6 +1378,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
         // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
+          valueDropDownSelected = dropdownValue;
         });
       },
       items: widget.list.map<DropdownMenuItem<String>>((String value) {
