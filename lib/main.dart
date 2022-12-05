@@ -5,7 +5,11 @@ const Map<String, IconData> iconsMap = {
   'attach_money': Icons.attach_money,
   'bar_chart_sharp': Icons.bar_chart_sharp,
   'savings': Icons.savings,
-  'call_made': Icons.call_made,
+  'pix': Icons.pix,
+  'card':Icons.payment,
+  'euro':Icons.euro,
+  'pounds': Icons.currency_pound,
+  'bitcoin': Icons.currency_bitcoin
 };
 
 void main() {
@@ -160,26 +164,16 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.vertical,
               pageSnapping: false,
               children: const [
-                _Section(
-                  color: Color.fromARGB(255, 0, 143, 160),
-                  index: 0,
-                ),
-                _Section(
-                  color: Color.fromARGB(255, 0, 143, 160),
-                  index: 1
-                ),
-                _Section(
-                  color: Color.fromARGB(255, 0, 143, 160),
-                  index:2
-                ),
-                _Section(
-                  color: Color.fromARGB(255, 0, 143, 160),
-                  index:3
-                ),
-                _Section(
-                  color: Color.fromARGB(255, 0, 143, 160),
-                  index: 4,
-                ),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 0),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 1),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 2),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 3),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 4),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 5),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 6),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 7),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 8),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 9),
               ],
             ),
           )
@@ -225,13 +219,49 @@ class _Menu extends StatelessWidget {
             onPressed: () {
               sectionClick(3);
             },
-            child: const Text('Cartões ', style: TextStyle(fontSize: 20)),
+            child: const Text('Extratos ', style: TextStyle(fontSize: 20)),
           ),
           TextButton(
             onPressed: () {
               sectionClick(4);
             },
-            child: const Text('Popança ', style: TextStyle(fontSize: 20)),
+            child: const Text('Poupança ', style: TextStyle(fontSize: 20)),
+          ),
+          TextButton(
+            onPressed: () {
+              sectionClick(5);
+            },
+            child: const Text('Cartões ', style: TextStyle(fontSize: 20)),
+          ),
+          TextButton(
+            onPressed: () {
+              sectionClick(6);
+            },
+            child: const Text('Empréstimos ', style: TextStyle(fontSize: 20)),
+          ),
+          TextButton(
+            onPressed: () {
+              sectionClick(7);
+            },
+            child: const Text('Recarga ', style: TextStyle(fontSize: 20)),
+          ),
+          TextButton(
+            onPressed: () {
+              sectionClick(8);
+            },
+            child: const Text('Seguro ', style: TextStyle(fontSize: 20)),
+          ),
+          TextButton(
+            onPressed: () {
+              sectionClick(9);
+            },
+            child: const Text('Câmbio ', style: TextStyle(fontSize: 20)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Sair ', style: TextStyle(fontSize: 20)),
           ),
         ],
       ),
@@ -285,10 +315,26 @@ class LayoutSection extends StatelessWidget {
       return const Transfer(10.35);
     }
     else if(index==3) {
-      return const Cards();
+      return const Extracts();
     }
-    else {
+    else if (index==4){
       return const Savings(10.35, 100.67, 3.17);
+    }
+    else if (index==5){
+      return Container();
+    }
+    else if (index==6){
+      return Container();
+    }
+    else if (index==7){
+      return Container();
+    }
+    else if (index==8){
+      return Container();
+    }
+
+    else{
+      return const Exchanging();
     }
   }
 }
@@ -457,12 +503,34 @@ class Transfer extends StatelessWidget {
   }
 }
 
-class Cards extends StatelessWidget {
-  const Cards({Key? key}) : super(key: key);
+class Extracts extends StatelessWidget {
+  const Extracts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          H1('Extratos', 100),
+          SizedBox(
+            height: 560,
+            child: ListView(children: const [
+              ExtractElement('Transferência', 'pix', 190, 'pix', '27 Nov'),
+              ExtractElement('Pagamento', 'C.Débito', 120, 'card', '27 Nov'),
+              ExtractElement('Dinheiro resgatado', 'poupança', 19, 'savings', '26 Nov'),
+              ExtractElement('Dinheiro guardado', 'poupança', 10, 'savings', '22 Nov'),
+              ExtractElement('Pagamento', 'pix', 90, 'pix', '19 Nov'),
+              ExtractElement('Pagamento', 'boleto', 20, 'attach_money', '28 Oct'),
+              ExtractElement('Transferência', 'pix', 12, 'pix', '27 Oct'),
+
+            ],),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -573,6 +641,145 @@ class Savings extends StatelessWidget {
   }
 }
 
+class Exchanging extends StatelessWidget {
+  const Exchanging({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          H1('Câmbio', 100),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              SmallerCard(5.22, 'attach_money', 'Cotação Dólar USD', 'R\$'),
+              SmallerCard(10.00, 'attach_money', 'Sua carteira Dólar', '\$')
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SmallerCard(5.51, 'euro', 'Cotação Euro', 'R\$'),
+              SmallerCard(0.00, 'euro', 'Sua carteira Euro', '\u{20AC}'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SmallerCard(6.44, 'pounds', 'Cotação Libras', 'R\$'),
+              SmallerCard(0.00, 'pounds', 'Sua carteira Libras', '\u{00A3}'),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width:200,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.input_outlined),
+                          hintText: 'R\$ 00.00',
+                          labelText: 'Valor',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                  width:250,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.money),
+                          hintText: '(usd, euro ou libras)',
+                          labelText: 'Moeda de conversão',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                    width:300,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Depositar valor', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
+                    )
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width:200,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.output_outlined),
+                          hintText: 'R\$ 00.00',
+                          labelText: 'Valor',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                  width:250,
+                  height: 50,
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.money),
+                          hintText: '(usd, euro ou libras)',
+                          labelText: 'Moeda de conversão',
+                          border: OutlineInputBorder())
+
+                  ),
+                ),
+                Container(
+                    width:300,
+                    height:50,
+                    child: ElevatedButton(
+                        onPressed: (){},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 0, 143, 160),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Text('Resgatar da carteira', style: TextStyle(fontSize: 16),)
+                          ],
+                        )
+                    )
+                ),
+              ],
+            ),
+          ),
+
+
+        ],),
+    );
+  }
+}
+
+
 //aux layouts
 
 class SmallCard extends StatelessWidget {
@@ -610,6 +817,55 @@ class SmallCard extends StatelessWidget {
                   ),),
                   Text('R\$ $value', style:  const TextStyle(
                     fontSize: 40,
+                    color: Color.fromARGB(255, 2, 53, 53),
+                  ),)
+
+                ],
+              ),
+            ),
+
+          ]
+      )
+      ,);
+  }
+}
+
+class SmallerCard extends StatelessWidget {
+  final double value;
+  final String icon;
+  final String description;
+  final String symbol;
+  const SmallerCard(this.value, this.icon, this.description, this.symbol, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(height:75, width:375,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+            width: 0
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child:Row(
+          children:[
+            Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Icon(iconsMap[icon],
+                  color: const Color.fromARGB(255, 2, 53, 53),
+                  size:50
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 7.5, 7.5, 7.5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children:  [
+                  Text(description, style: const TextStyle(
+                      color: Colors.blueGrey, fontSize: 18
+                  ),),
+                  Text('$symbol $value', style:  const TextStyle(
+                    fontSize: 30,
                     color: Color.fromARGB(255, 2, 53, 53),
                   ),)
 
@@ -678,7 +934,58 @@ class MainDisplay extends StatelessWidget {
   }
 }
 
+class ExtractElement extends StatelessWidget {
+  final String type;
+  final String method;
+  final double value;
+  final String icon;
+  final String date;
+  const ExtractElement(this.type, this.method, this.value, this.icon, this.date, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 3.0),
+      child: Container(
+        color: Color.fromARGB(30, 2, 53, 53),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(iconsMap[icon],
+                  color: const Color.fromARGB(255, 2, 53, 53),
+                  size:50
+              ),
+            ),
+            Column(
+              children: [
+                Text(type, style: const TextStyle(
+                    color: Color.fromARGB(255, 2, 53, 53), fontSize: 25, fontWeight: FontWeight.bold
+                ),),
+
+                Text('R\$ $value', style:  const TextStyle(
+                  fontSize: 25,
+                  color: Color.fromARGB(150, 2, 53, 53),
+                ),),
+                Text(method, style:  const TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(150, 2, 53, 53),
+                ),)
+            ],),
+            Text(date, style:  const TextStyle(
+              fontSize: 25,
+              color: Color.fromARGB(255, 2, 53, 53),
+            ),)
+        ],),
+      ),
+    );
+  }
+}
+
 // DropdownButton
+
 class DropdownButtonExample extends StatefulWidget {
   const DropdownButtonExample(list, {super.key});
 
