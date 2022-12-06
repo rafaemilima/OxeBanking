@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-const List<String> list1 = <String>['Método de Pagamento','Pix', 'Boleto'];
+import 'dart:math';
+
+import 'package:flutter/services.dart';
+const List<String> list1 = <String>['Método de Pagamento','Pix ', 'Boleto'];
 const List<String> list2 = <String>['Método de Transferência','TED', 'Pix'];
 const List<String> list3 = <String>['Moeda','Dólar', 'Euro', 'Libras'];
 const List<String> list4 = <String>['Parcelas','6x','8x', '10x', '12x', '24x'];
@@ -33,11 +36,13 @@ double euroAmount = 22.00;
 double euroCurrency = 5.51;
 double monthlyStonks = 8.27;
 double borrowingLimits = 32000.00;
+double valueCard = 1378.25;
 String valueDropDownSelected = '';
 
 TextEditingController savingsController = TextEditingController();
 TextEditingController transferController = TextEditingController();
-TextEditingController paymentController = TextEditingController();
+TextEditingController codeTransferController = TextEditingController();
+TextEditingController codePaymentController = TextEditingController();
 TextEditingController rechargeController = TextEditingController();
 TextEditingController cellphoneController = TextEditingController();
 TextEditingController exchangeController = TextEditingController();
@@ -115,6 +120,9 @@ class LoginScreen extends StatelessWidget {
           SizedBox(
             width:300,
             child: TextFormField(
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                ],
               decoration: const InputDecoration(
               icon: Icon(Icons.person),
               hintText: '000.000.000-00',
@@ -137,6 +145,9 @@ class LoginScreen extends StatelessWidget {
           SizedBox(
             width:300,
             child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 1, 89, 100),
+                ),
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()),
               );},
@@ -152,6 +163,9 @@ class LoginScreen extends StatelessWidget {
           SizedBox(
               width:300,
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 1, 89, 100),
+                  ),
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInPage()),
                     );},
@@ -205,6 +219,9 @@ class _SignInPageState extends State<SignInPage> {
                 SizedBox(
                   width:300,
                   child: TextFormField(
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                      ],
                       decoration: const InputDecoration(
                           icon: Icon(Icons.person),
                           hintText: '000.000.000-00',
@@ -238,6 +255,9 @@ class _SignInPageState extends State<SignInPage> {
                 SizedBox(
                     width:300,
                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 1, 89, 100),
+                        ),
                         onPressed: (){
                           Navigator.pop(context);
                           },
@@ -304,6 +324,7 @@ class _HomePageState extends State<HomePage> {
                 _Section(color: Color.fromARGB(255, 0, 143, 160), index: 7),
                 _Section(color: Color.fromARGB(255, 0, 143, 160), index: 8),
                 _Section(color: Color.fromARGB(255, 0, 143, 160), index: 9),
+                _Section(color: Color.fromARGB(255, 0, 143, 160), index: 10),
               ],
             ),
           )
@@ -328,70 +349,77 @@ class _Menu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
+
             onPressed: () {
               sectionClick(0);
             },
-            child: const Text('Conta ', style: TextStyle(fontSize: 20),),
+            child: const Text('Conta ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100)),),
           ),
           TextButton(
             onPressed: () {
               sectionClick(1);
             },
-            child: const Text('Pagamentos ', style: TextStyle(fontSize: 20)),
+            child: const Text('Pagamentos ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(2);
             },
-            child: const Text('Transferências ', style: TextStyle(fontSize: 20)),
+            child: const Text('Transferências ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(3);
             },
-            child: const Text('Extratos ', style: TextStyle(fontSize: 20)),
+            child: const Text('Extratos ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(4);
             },
-            child: const Text('Poupança ', style: TextStyle(fontSize: 20)),
+            child: const Text('Poupança ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(5);
             },
-            child: const Text('Cartões ', style: TextStyle(fontSize: 20)),
+            child: const Text('Cartões ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(6);
             },
-            child: const Text('Empréstimos ', style: TextStyle(fontSize: 20)),
+            child: const Text('Empréstimos ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(7);
             },
-            child: const Text('Recarga ', style: TextStyle(fontSize: 20)),
+            child: const Text('Recarga ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(8);
             },
-            child: const Text('Seguro ', style: TextStyle(fontSize: 20)),
+            child: const Text('Câmbio ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               sectionClick(9);
             },
-            child: const Text('Câmbio ', style: TextStyle(fontSize: 20)),
+            child: const Text('Investimentos ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
+          ),
+          TextButton(
+            onPressed: () {
+              sectionClick(10);
+            },
+            child: const Text('Seguro ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Sair ', style: TextStyle(fontSize: 20)),
+            child: const Text('Sair ', style: TextStyle(fontSize: 20, color:Color.fromARGB(255, 1, 89, 100))),
           ),
         ],
       ),
@@ -460,11 +488,14 @@ class LayoutSection extends StatelessWidget {
       return Recharging(countAmount);
     }
     else if (index==8){
-      return const PolicyAssurance();
+      return const Exchanging();
     }
 
+    else if (index==9){
+      return const Invest();
+    }
     else{
-      return const Exchanging();
+      return const PolicyAssurance();
     }
   }
 }
@@ -529,7 +560,7 @@ class _PaymentState extends State<Payment> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const H1('Pagamentos', 100),
-              SmallCard('R\$ ${widget.amount}', 'attach_money', 'Saldo da conta', 1),
+              SmallCard('R\$ ${countAmount}', 'attach_money', 'Saldo da conta', 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -546,6 +577,8 @@ class _PaymentState extends State<Payment> {
                     width:300,
                     height: 50,
                     child: TextFormField(
+
+                        controller: codePaymentController,
                         decoration: const InputDecoration(
                             icon: Icon(Icons.qr_code),
                             hintText: 'Código pix/boleto',
@@ -558,9 +591,17 @@ class _PaymentState extends State<Payment> {
                       width:300,
                       height:50,
                       child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){setState((){
+                            if(codePaymentController.text != '' && (valueDropDownSelected == 'Boleto' || valueDropDownSelected=='Pix ')){
+                              var gen = Random();
+                              int boleto = gen.nextInt(countAmount~/2)+50;
+                              countAmount-= boleto;
+                              countAmount = double.parse(countAmount.toStringAsFixed(2));
+                              print(boleto);
+                            }
+                          });},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                            backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -604,7 +645,7 @@ class _TransferState extends State<Transfer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const H1('Transferências', 100),
-              SmallCard('R\$ ${widget.amount}', 'attach_money', 'Saldo da conta', 1),
+              SmallCard('R\$ ${countAmount}', 'attach_money', 'Saldo da conta', 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
@@ -621,6 +662,10 @@ class _TransferState extends State<Transfer> {
                     width:250,
                     height: 50,
                     child: TextFormField(
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                        ],
+                        controller: transferController,
                         decoration: const InputDecoration(
                             icon: Icon(Icons.monetization_on_outlined),
                             hintText: '00.00',
@@ -633,6 +678,7 @@ class _TransferState extends State<Transfer> {
                     width:250,
                     height: 50,
                     child: TextFormField(
+                        controller: codeTransferController,
                         decoration: const InputDecoration(
                             icon: Icon(Icons.qr_code),
                             hintText: 'Código pix/TED',
@@ -645,9 +691,18 @@ class _TransferState extends State<Transfer> {
                       width:300,
                       height:50,
                       child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            setState((){
+                              if(transferController.text != '' && codeTransferController.text !=''){
+                                if(valueDropDownSelected == 'TED' || valueDropDownSelected=='Pix') {
+                                  countAmount -= double.parse(transferController.text);
+                                  countAmount = double.parse(countAmount.toStringAsFixed(2));
+                                }
+                              }
+
+                            });},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                            backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -744,6 +799,9 @@ class _SavingsState extends State<Savings> {
                           width:300,
                           height: 50,
                           child: TextFormField(
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                              ],
                               controller: savingsController,
                               decoration: const InputDecoration(
                                   icon: Icon(Icons.inbox),
@@ -760,17 +818,20 @@ class _SavingsState extends State<Savings> {
                             child: ElevatedButton(
                                 onPressed: (){
                                   setState(() {
-                                    if (valueDropDownSelected=='Depositar') {
-                                      savingsAmount+= double.parse(savingsController.text);
-                                      countAmount-= double.parse(savingsController.text);
-                                    }
-                                    else if (valueDropDownSelected =='Resgatar') {
-                                      savingsAmount-= double.parse(savingsController.text);
-                                      countAmount+= double.parse(savingsController.text);
-                                    }
-                                  });},
+                                    if(savingsController.text != ''){
+                                      if (valueDropDownSelected=='Depositar') {
+                                        savingsAmount+= double.parse(savingsController.text);
+                                        countAmount-= double.parse(savingsController.text);
+                                      }
+                                      else if (valueDropDownSelected =='Resgatar') {
+                                        savingsAmount-= double.parse(savingsController.text);
+                                        countAmount+= double.parse(savingsController.text);
+                                      }
+                                      countAmount = double.parse(countAmount.toStringAsFixed(2));
+                                      savingsAmount = double.parse(savingsAmount.toStringAsFixed(2));
+                                  }});},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                                  backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -847,6 +908,9 @@ class _ExchangingState extends State<Exchanging> {
                       width:200,
                       height: 50,
                       child: TextFormField(
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                          ],
                           decoration: const InputDecoration(
                               icon: Icon(Icons.input_outlined),
                               hintText: 'R\$ 00.00',
@@ -863,7 +927,7 @@ class _ExchangingState extends State<Exchanging> {
                         child: ElevatedButton(
                             onPressed: (){},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                              backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -907,7 +971,7 @@ class _RechargingState extends State<Recharging> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const H1('Recargas', 100),
-              SmallCard('R\$ ${widget.amount}', 'attach_money', 'Saldo disponível', 1),
+              SmallCard('R\$ ${countAmount}', 'attach_money', 'Saldo disponível', 1),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -917,9 +981,13 @@ class _RechargingState extends State<Recharging> {
                       width:200,
                       height: 50,
                       child: TextFormField(
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                          ],
+                          controller: rechargeController,
                           decoration: const InputDecoration(
                               icon: Icon(Icons.monetization_on_outlined),
-                              hintText: 'R\$ 00.00',
+                              hintText: '00.00',
                               labelText: 'Valor',
                               border: OutlineInputBorder())
 
@@ -929,6 +997,10 @@ class _RechargingState extends State<Recharging> {
                       width:250,
                       height: 50,
                       child: TextFormField(
+                          controller: cellphoneController,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          ],
                           decoration: const InputDecoration(
                               icon: Icon(Icons.phone),
                               hintText: '(xx) xxxxx-xxxx',
@@ -941,9 +1013,15 @@ class _RechargingState extends State<Recharging> {
                         width:300,
                         height:50,
                         child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: (){setState(() {
+                              if(cellphoneController.text != '' && rechargeController.text !=''){
+                                countAmount -= double.parse(rechargeController.text);
+                                countAmount = double.parse(countAmount.toStringAsFixed(2));
+                              }
+
+                            });},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                              backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -997,9 +1075,13 @@ class _BorrowingState extends State<Borrowing> {
                       width:260,
                       height: 50,
                       child: TextFormField(
+                          controller: borrowingController,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]+[.]{0,1}[0-9]*')),
+                          ],
                           decoration: const InputDecoration(
                               icon: Icon(Icons.monetization_on_outlined),
-                              hintText: 'R\$ 00.00',
+                              hintText: '00.00',
                               labelText: 'Valor do Empréstimo',
                               border: OutlineInputBorder())
 
@@ -1010,15 +1092,26 @@ class _BorrowingState extends State<Borrowing> {
                         width:250,
                         height:50,
                         child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              setState(() {
+                                if(borrowingController.text != '' && list4.contains(valueDropDownSelected)){
+                                  double borrow = double.parse(borrowingController.text);
+                                  if (borrow > borrowingLimits){
+                                    borrow = borrowingLimits;
+                                  }
+                                  countAmount+= borrowingLimits;
+                                  countAmount = double.parse(countAmount.toStringAsFixed(2));
+                                }
+
+                            });},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                              backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: const [
-                                Text('Efetuar empréstimo', style: TextStyle(fontSize: 16),)
+                                Text('Solicitar empréstimo', style: TextStyle(fontSize: 16),)
                               ],
                             )
                         )
@@ -1058,9 +1151,48 @@ class PolicyAssurance extends StatelessWidget {
   }
 }
 
-class CreditCards extends StatelessWidget {
+class Invest extends StatefulWidget {
+  const Invest( {Key? key}) : super(key: key);
+
+  @override
+  State<Invest> createState() => _InvestState();
+}
+
+class _InvestState extends State<Invest> {
+  @override
+  Widget build(BuildContext context) {
+
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 700,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              H1('Investimentos', 100),
+              MainDisplay(monthlyStonks, 'Na poupança esse mês seu dinheiro rendeu:'),
+              H1('Outras formas de investimento:', 30),
+
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CreditCards extends StatefulWidget {
   const CreditCards({Key? key}) : super(key: key);
 
+  @override
+  State<CreditCards> createState() => _CreditCardsState();
+}
+
+class _CreditCardsState extends State<CreditCards> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -1102,8 +1234,8 @@ class CreditCards extends StatelessWidget {
                     ],),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        SmallCard('R\$ 1378.00', 'credit', 'Fatura', 1.5)
+                      children: [
+                        SmallCard('R\$ $valueCard', 'credit', 'Fatura', 1.5)
                       ],
                     )
                   ],
@@ -1119,7 +1251,7 @@ class CreditCards extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: (){},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1136,7 +1268,7 @@ class CreditCards extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: (){},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1153,7 +1285,7 @@ class CreditCards extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: (){},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1168,9 +1300,15 @@ class CreditCards extends StatelessWidget {
                     width:200,
                     height:50,
                     child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){setState(() {
+                          if (valueCard > 0 && countAmount > valueCard){
+                            countAmount -= valueCard;
+                            countAmount = double.parse(countAmount.toStringAsFixed(2));
+                            valueCard = 0.00;
+                          }
+                        });},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 0, 143, 160),
+                          backgroundColor: const Color.fromARGB(255, 1, 89, 100),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1273,7 +1411,7 @@ class MainDisplay extends StatelessWidget {
         ),),
         Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 0, 143, 160),
+              color: const Color.fromARGB(255, 1, 89, 100),
               boxShadow: const [
                 BoxShadow(
                     color: Color.fromARGB(200, 2, 53, 53),
@@ -1348,6 +1486,9 @@ class ExtractElement extends StatelessWidget {
     );
   }
 }
+
+//pop ups
+
 
 
 // DropdownButton
